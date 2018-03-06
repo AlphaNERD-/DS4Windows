@@ -1454,8 +1454,8 @@ namespace DS4Windows
                 { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/UseSAforMouse"); Boolean.TryParse(Item.InnerText, out useSAforMouse[device]); }
                 catch { useSAforMouse[device] = false; missingSetting = true; }
                 try
-                { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/UseSAforMouseLikeAnalog"); Boolean.TryParse(Item.InnerText, out useSAforMouseLikeAnalog[device]); }
-                catch { useSAforMouse[device] = false; missingSetting = true; }
+                { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/UseSAforMouseLikeAnalog");  Boolean.TryParse(Item.InnerText, out useSAforMouseLikeAnalog[device]); }
+                catch { useSAforMouseLikeAnalog[device] = false; missingSetting = true; }
                 try
                 { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/SATriggers"); sATriggers[device] = Item.InnerText; }
                 catch { sATriggers[device] = ""; missingSetting = true; }
