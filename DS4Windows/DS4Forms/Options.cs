@@ -314,6 +314,7 @@ namespace DS4Windows
                 rBTPMouse.Checked = !UseTPforControls[device];
                 rBSAMouse.Checked = UseSAforMouse[device];
                 rBSAControls.Checked = !UseSAforMouse[device];
+                rBSAMouseLikeAnalog.Checked = UseSAforMouseLikeAnalog[device];
                 nUDLSCurve.Value = LSCurve[device];
                 nUDRSCurve.Value = RSCurve[device];
                 cBControllerInput.Checked = DS4Mapping;
@@ -1030,6 +1031,7 @@ namespace DS4Windows
             StartTouchpadOff[device] = cbStartTouchpadOff.Checked;
             UseTPforControls[device] = rBTPControls.Checked;
             UseSAforMouse[device] = rBSAMouse.Checked;
+            UseSAforMouseLikeAnalog[device] = rBSAMouseLikeAnalog.Checked;
             DS4Mapping = cBControllerInput.Checked;
             LSCurve[device] = (int)Math.Round(nUDLSCurve.Value, 0);
             RSCurve[device] = (int)Math.Round(nUDRSCurve.Value, 0);
@@ -2272,6 +2274,7 @@ namespace DS4Windows
         private void useSAforMouse_CheckedChanged(object sender, EventArgs e)
         {
             UseSAforMouse[device] = rBSAMouse.Checked;
+            UseSAforMouseLikeAnalog[device] = rBSAMouseLikeAnalog.Checked;
             pnlSAMouse.Visible = rBSAMouse.Checked;
             fLPTiltControls.Visible = rBSAControls.Checked;
         }

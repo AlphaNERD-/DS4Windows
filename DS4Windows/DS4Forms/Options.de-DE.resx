@@ -725,4 +725,7 @@
   <data name="tPController.Text" xml:space="preserve">
     <value>Controller Kalibrierung</value>
   </data>
+  <data name="rBSAMouseLikeAnalog.Text" xml:space="preserve">
+    <value>Maus-Analogstick</value>
+  </data>
 </root>

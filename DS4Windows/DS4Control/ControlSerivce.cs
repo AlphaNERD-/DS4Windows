@@ -15,6 +15,7 @@ namespace DS4Windows
         public X360Device x360Bus;
         public DS4Device[] DS4Controllers = new DS4Device[4];
         public Mouse[] touchPad = new Mouse[4];
+        public MouseLikeAnalog[] mouseLikeAnalog = new MouseLikeAnalog[4];
         private bool running = false;
         private DS4State[] MappedState = new DS4State[4];
         private DS4State[] CurrentState = new DS4State[4];
@@ -124,11 +125,13 @@ namespace DS4Windows
                         device.Removal += this.On_DS4Removal;
                         device.Removal += DS4Devices.On_Removal;
                         touchPad[ind] = new Mouse(ind, device);
+                        mouseLikeAnalog[ind] = new MouseLikeAnalog(ind, device);
                         device.LightBarColor = MainColor[ind];
                         if (!DinputOnly[ind])
                             x360Bus.Plugin(ind);
                         device.Report += this.On_Report;
                         TouchPadOn(ind, device);
+                        device.SixAxis.SixAxisMoved += mouseLikeAnalog[ind].SixAxisMoved;
                         //string filename = ProfilePath[ind];
                         ind++;
                         if (showlog)
@@ -230,11 +233,13 @@ namespace DS4Windows
                             device.Removal += this.On_DS4Removal;
                             device.Removal += DS4Devices.On_Removal;
                             touchPad[Index] = new Mouse(Index, device);
+                            mouseLikeAnalog[Index] = new MouseLikeAnalog(Index, device);
                             device.LightBarColor = MainColor[Index];
                             device.Report += this.On_Report;
                             if (!DinputOnly[Index])
                                 x360Bus.Plugin(Index);
                             TouchPadOn(Index, device);
+                            device.SixAxis.SixAxisMoved += mouseLikeAnalog[Index].SixAxisMoved;
                             //string filename = Path.GetFileName(ProfilePath[Index]);
                             if (System.IO.File.Exists(appdatapath + "\\Profiles\\" + ProfilePath[Index] + ".xml"))
                             {
@@ -434,6 +439,7 @@ namespace DS4Windows
                 System.Threading.Thread.Sleep(XINPUT_UNPLUG_SETTLE_TIME);
                 DS4Controllers[ind] = null;
                 touchPad[ind] = null;
+                mouseLikeAnalog[ind] = null;
                 ControllerStatusChanged(this);
             }
         }

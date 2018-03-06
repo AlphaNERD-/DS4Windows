@@ -78,6 +78,7 @@
     <Compile Include="DS4Control\Mapping.cs" />
     <Compile Include="DS4Control\Mouse.cs" />
     <Compile Include="DS4Control\MouseCursor.cs" />
+    <Compile Include="DS4Control\MouseLikeAnalog.cs" />
     <Compile Include="DS4Control\MouseWheel.cs" />
     <Compile Include="DS4Control\ScpDevice.cs">
       <SubType>Component</SubType>
