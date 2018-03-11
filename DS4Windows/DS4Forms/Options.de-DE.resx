@@ -645,7 +645,7 @@
     <value>109, 17</value>
   </data>
   <data name="rBSAMouseLikeAnalog.Text" xml:space="preserve">
-    <value>Maus-Analogstick</value>
+    <value>Als mausähnlichen Analogstick nutzen</value>
   </data>
   <data name="rBSAControls.Size" type="System.Drawing.Size, System.Drawing">
     <value>133, 17</value>

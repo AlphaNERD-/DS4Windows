@@ -1067,7 +1067,7 @@ namespace DS4Windows
                     pactions.Add(lvi.Text);
             ProfileActions[device] = pactions;
             pnlTPMouse.Visible = rBTPMouse.Checked;
-            pnlSAMouse.Visible = rBSAMouse.Checked;
+            pnlSAMouse.Visible = rBSAMouse.Checked | rBSAMouseLikeAnalog.Checked;
             fLPTiltControls.Visible = rBSAControls.Checked;
             fLPTouchSwipe.Visible = rBTPControls.Checked;
 
@@ -2300,7 +2300,7 @@ namespace DS4Windows
         private void useSAforMouse_CheckedChanged(object sender, EventArgs e)
         {
             GyroMode[device] = getGyroSettings();
-            pnlSAMouse.Visible = rBSAMouse.Checked;
+            pnlSAMouse.Visible = rBSAMouse.Checked | rBSAMouseLikeAnalog.Checked;
             fLPTiltControls.Visible = rBSAControls.Checked;
         }
 

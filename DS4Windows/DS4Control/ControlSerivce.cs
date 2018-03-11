@@ -131,7 +131,7 @@ namespace DS4Windows
                             x360Bus.Plugin(ind);
                         device.Report += this.On_Report;
                         TouchPadOn(ind, device);
-                        device.SixAxis.SixAxisMoved += mouseLikeAnalog[ind].SixAxisMoved;
+                        device.SixAxis.SixAccelMoved += mouseLikeAnalog[ind].SixAxisMoved;
                         //string filename = ProfilePath[ind];
                         ind++;
                         if (showlog)
@@ -239,7 +239,7 @@ namespace DS4Windows
                             if (!DinputOnly[Index])
                                 x360Bus.Plugin(Index);
                             TouchPadOn(Index, device);
-                            device.SixAxis.SixAxisMoved += mouseLikeAnalog[Index].SixAxisMoved;
+                            device.SixAxis.SixAccelMoved += mouseLikeAnalog[Index].SixAxisMoved;
                             //string filename = Path.GetFileName(ProfilePath[Index]);
                             if (System.IO.File.Exists(appdatapath + "\\Profiles\\" + ProfilePath[Index] + ".xml"))
                             {
@@ -495,6 +495,8 @@ namespace DS4Windows
 
                 // Update the GUI/whatever.
                 DS4LightBar.updateLightBar(device, ind, cState, ExposedState[ind], touchPad[ind]);
+
+                cState = mouseLikeAnalog[ind].GetStickDelta(cState);
 
                 x360Bus.Parse(cState, processingData[ind].Report, ind);
                 // We push the translated Xinput state, and simultaneously we

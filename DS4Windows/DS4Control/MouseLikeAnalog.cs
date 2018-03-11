@@ -12,6 +12,9 @@ namespace DS4Windows
         private DS4Device device;
         private int deviceNum;
 
+        private double hRemainder = 0.0, vRemainder = 0.0;
+        private double stickH = 0.0, stickV = 0.0;
+
         public MouseLikeAnalog(int deviceID, DS4Device d)
         {
             device = d;
@@ -20,6 +23,9 @@ namespace DS4Windows
 
         public void SixAxisMoved(object sender, SixAxisEventArgs e)
         {
+            stickH = 0;
+            stickV = 0;
+
             if (Global.GyroMode[deviceNum] == 1 && Global.GyroSensitivity[deviceNum] > 0)
             {
                 bool triggeractivated = true;
@@ -30,14 +36,50 @@ namespace DS4Windows
                         if (!(int.TryParse(s, out i) && getDS4ControlsByName(i)))
                             triggeractivated = false;
                 if (triggeractivated)
-                    calculateStickDelta();
+                    calculateStickDelta(e);
                 device.getCurrentState(state);
             }
         }
 
-        private void calculateStickDelta()
+        private void calculateStickDelta(SixAxisEventArgs arg)
         {
+            int deltaX = 0, deltaY = 0;
+            deltaX = -arg.sixAxis.accelX;
+            deltaY = -arg.sixAxis.accelY;
+            //Console.WriteLine(arg.sixAxis.deltaX);
 
+            double coefficient = Global.GyroSensitivity[deviceNum] / 100f;
+            //Collect rounding errors instead of losing motion.
+            double xMotion = coefficient * deltaX;
+            xMotion += hRemainder;
+            int xAction = (int)xMotion;
+            hRemainder += xMotion - xAction;
+            hRemainder -= (int)hRemainder;
+            double yMotion = coefficient * deltaY;
+            yMotion += vRemainder;
+            int yAction = (int)yMotion;
+            vRemainder += yMotion - yAction;
+            vRemainder -= (int)vRemainder;
+            if (Global.GyroInvert[deviceNum] == 2 || Global.GyroInvert[deviceNum] == 3)
+                xAction *= -1;
+            if (Global.GyroInvert[deviceNum] == 1 || Global.GyroInvert[deviceNum] == 3)
+                yAction *= -1;
+            if (yAction != 0 || xAction != 0)
+            {
+                stickH = xAction;
+                stickV = yAction;
+            }
+        }
+
+        public DS4State GetStickDelta(DS4State cState)
+        {
+            if (Global.GyroMode[deviceNum] == 1 && Global.GyroSensitivity[deviceNum] > 0)
+            {
+                cState.RX = (byte)(cState.RX + (byte)stickH);
+                cState.RY = (byte)(cState.RY + (byte)stickV);
+            }
+
+            return cState;
         }
 
         private bool getDS4ControlsByName(int key)

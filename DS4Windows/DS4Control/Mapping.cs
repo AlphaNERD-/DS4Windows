@@ -1819,7 +1819,7 @@ namespace DS4Windows
         {
             double SXD = SXDeadzone[device];
             double SZD = SZDeadzone[device];
-            bool sOff = GyroMode[device] == 0;
+            bool gyroMapEnabled = GyroMode[device] == 0;
             switch (control)
             {
                 case DS4Controls.Share: return (byte)(cState.Share ? 255 : 0);
@@ -1851,10 +1851,10 @@ namespace DS4Windows
                 case DS4Controls.RYPos: return (byte)(cState.RY - 127.5f < 0 ? 0 : (cState.RY - 127.5f) * 2);
                 case DS4Controls.L2: return cState.L2;
                 case DS4Controls.R2: return cState.R2;
-                case DS4Controls.GyroXPos: return (byte)(!sOff && SXSens[device] * eState.GyroX > SXD * 10 ? Math.Min(255, SXSens[device] * eState.GyroX * 2) : 0);
-                case DS4Controls.GyroXNeg: return (byte)(!sOff && SXSens[device] * eState.GyroX < -SXD * 10 ? Math.Min(255, SXSens[device] * -eState.GyroX * 2) : 0);
-                case DS4Controls.GyroZPos: return (byte)(!sOff && SZSens[device] * eState.GyroZ > SZD * 10 ? Math.Min(255, SZSens[device] * eState.GyroZ * 2) : 0);
-                case DS4Controls.GyroZNeg: return (byte)(!sOff && SZSens[device] * eState.GyroZ < -SZD * 10 ? Math.Min(255, SZSens[device] * -eState.GyroZ  * 2) : 0);
+                case DS4Controls.GyroXPos: return (byte)(gyroMapEnabled && SXSens[device] * eState.GyroX > SXD * 10 ? Math.Min(255, SXSens[device] * eState.GyroX * 2) : 0);
+                case DS4Controls.GyroXNeg: return (byte)(gyroMapEnabled && SXSens[device] * eState.GyroX < -SXD * 10 ? Math.Min(255, SXSens[device] * -eState.GyroX * 2) : 0);
+                case DS4Controls.GyroZPos: return (byte)(gyroMapEnabled && SZSens[device] * eState.GyroZ > SZD * 10 ? Math.Min(255, SZSens[device] * eState.GyroZ * 2) : 0);
+                case DS4Controls.GyroZNeg: return (byte)(gyroMapEnabled && SZSens[device] * eState.GyroZ < -SZD * 10 ? Math.Min(255, SZSens[device] * -eState.GyroZ  * 2) : 0);
                 case DS4Controls.SwipeUp: return (byte)(tp != null ? tp.swipeUpB : 0);
                 case DS4Controls.SwipeDown: return (byte)(tp != null ? tp.swipeDownB: 0);
                 case DS4Controls.SwipeLeft: return (byte)(tp != null ?  tp.swipeLeftB: 0);
@@ -1865,7 +1865,7 @@ namespace DS4Windows
 
         public static bool getBoolMapping(int device, DS4Controls control, DS4State cState, DS4StateExposed eState, Mouse tp)
         {
-            bool sOff = GyroMode[device] == 0;
+            bool gyroMapEnabled = GyroMode[device] == 0;
             switch (control)
             {
                 case DS4Controls.Share: return cState.Share;
@@ -1897,10 +1897,10 @@ namespace DS4Windows
                 case DS4Controls.RYPos: return cState.RY > 127 + 55;
                 case DS4Controls.L2: return cState.L2 > 100;
                 case DS4Controls.R2: return cState.R2 > 100;
-                case DS4Controls.GyroXPos: return !sOff ? SXSens[device] * eState.GyroX > 67 : false;
-                case DS4Controls.GyroXNeg: return !sOff ? SXSens[device] * eState.GyroX < -67 : false;
-                case DS4Controls.GyroZPos: return !sOff ? SZSens[device] * eState.GyroZ > 67 : false;
-                case DS4Controls.GyroZNeg: return !sOff ? SZSens[device] * eState.GyroZ < -67 : false;
+                case DS4Controls.GyroXPos: return gyroMapEnabled ? SXSens[device] * eState.GyroX > 67 : false;
+                case DS4Controls.GyroXNeg: return gyroMapEnabled ? SXSens[device] * eState.GyroX < -67 : false;
+                case DS4Controls.GyroZPos: return gyroMapEnabled ? SZSens[device] * eState.GyroZ > 67 : false;
+                case DS4Controls.GyroZNeg: return gyroMapEnabled ? SZSens[device] * eState.GyroZ < -67 : false;
                 case DS4Controls.SwipeUp: return (tp != null && tp.swipeUp);
                 case DS4Controls.SwipeDown: return (tp != null && tp.swipeDown);
                 case DS4Controls.SwipeLeft: return (tp != null && tp.swipeLeft);
@@ -1915,7 +1915,7 @@ namespace DS4Windows
             byte falseVal = 127;
             double SXD = SXDeadzone[device];
             double SZD = SZDeadzone[device];
-            bool sOff = GyroMode[device] == 0;
+            bool gyroMapEnabled = GyroMode[device] == 0;
             if (alt)
                 trueVal = 255;
             switch (control)
@@ -1945,16 +1945,16 @@ namespace DS4Windows
                 case DS4Controls.SwipeDown: if (alt) return (byte)(tp != null ? 127.5f + tp.swipeDownB / 2f : 0); else return (byte)(tp != null ? 127.5f - tp.swipeDownB / 2f : 0);
                 case DS4Controls.SwipeLeft: if (alt) return (byte)(tp != null ? 127.5f + tp.swipeLeftB / 2f : 0); else return (byte)(tp != null ? 127.5f - tp.swipeLeftB / 2f : 0);
                 case DS4Controls.SwipeRight: if (alt) return (byte)(tp != null ? 127.5f + tp.swipeRightB / 2f : 0); else return (byte)(tp != null ? 127.5f - tp.swipeRightB / 2f : 0);
-                case DS4Controls.GyroXPos: if (!sOff && eState.GyroX > SXD * 10)
+                case DS4Controls.GyroXPos: if (gyroMapEnabled && eState.GyroX > SXD * 10)
                         if (alt) return (byte)Math.Min(255, 127 + SXSens[device] * eState.GyroX); else return (byte)Math.Max(0, 127 - SXSens[device] * eState.GyroX);
                     else return falseVal;
-                case DS4Controls.GyroXNeg: if (!sOff && eState.GyroX < -SXD * 10)
+                case DS4Controls.GyroXNeg: if (gyroMapEnabled && eState.GyroX < -SXD * 10)
                         if (alt) return (byte)Math.Min(255, 127 + SXSens[device] * -eState.GyroX); else return (byte)Math.Max(0, 127 - SXSens[device] * -eState.GyroX);
                     else return falseVal;
-                case DS4Controls.GyroZPos: if (!sOff && eState.GyroZ > SZD * 10)
+                case DS4Controls.GyroZPos: if (gyroMapEnabled && eState.GyroZ > SZD * 10)
                         if (alt) return (byte)Math.Min(255, 127 + SZSens[device] * eState.GyroZ); else return (byte)Math.Max(0, 127 - SZSens[device] * eState.GyroZ);
                     else return falseVal;
-                case DS4Controls.GyroZNeg: if (!sOff && eState.GyroZ < -SZD * 10)
+                case DS4Controls.GyroZNeg: if (gyroMapEnabled && eState.GyroZ < -SZD * 10)
                         if (alt) return (byte)Math.Min(255, 127 + SZSens[device] * -eState.GyroZ); else return (byte)Math.Max(0, 127 - SZSens[device] * -eState.GyroZ);
                     else return falseVal;
             }            
