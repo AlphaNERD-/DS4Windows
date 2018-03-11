@@ -702,7 +702,7 @@
   <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>Inherit</value>
   </data>
-  <data name="gBSensitivity,Text" xml:space="preserve">
+  <data name="gBSensitivity.Text" xml:space="preserve">
     <value>靈敏度</value>
   </data>
   <data name="tPController.Text" xml:space="preserve">

@@ -533,7 +533,7 @@ con profilo</value>
   <data name="fingersOnTouchpadToolStripMenuItem.Text" xml:space="preserve">
     <value>2 Dita sul Touchpad</value>
   </data>
-  <data name="gBSensitivity,Text" xml:space="preserve">
+  <data name="gBSensitivity.Text" xml:space="preserve">
     <value>Sensibilità</value>
   </data>
   <data name="gBTouchpad.Text" xml:space="preserve">

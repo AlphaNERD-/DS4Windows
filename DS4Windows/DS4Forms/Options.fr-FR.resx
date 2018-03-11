@@ -572,17 +572,11 @@
   <data name="tPCurve.Text" xml:space="preserve">
     <value>Courbe</value>
   </data>
-  <data name="rBSAControls.Location" type="System.Drawing.Point, System.Drawing">
-    <value>173, 25</value>
-  </data>
   <data name="rBSAControls.Size" type="System.Drawing.Size, System.Drawing">
     <value>167, 21</value>
   </data>
   <data name="rBSAControls.Text" xml:space="preserve">
     <value>Utiliser pour contrôles</value>
-  </data>
-  <data name="rBSAMouse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 25</value>
   </data>
   <data name="rBSAMouse.Size" type="System.Drawing.Size, System.Drawing">
     <value>163, 21</value>
@@ -686,7 +680,7 @@
   <data name="cHAction.Text" xml:space="preserve">
     <value>Action</value>
   </data>
-  <data name="gBSensitivity,Text" xml:space="preserve">
+  <data name="gBSensitivity.Text" xml:space="preserve">
     <value>Sensibilité</value>
   </data>
   <data name="lbBlue.Text" xml:space="preserve">

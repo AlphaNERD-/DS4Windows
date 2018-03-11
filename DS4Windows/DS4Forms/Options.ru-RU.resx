@@ -565,17 +565,11 @@
   <data name="tPCurve.Text" xml:space="preserve">
     <value>Кривые</value>
   </data>
-  <data name="rBSAControls.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 48</value>
-  </data>
   <data name="rBSAControls.Size" type="System.Drawing.Size, System.Drawing">
     <value>231, 21</value>
   </data>
   <data name="rBSAControls.Text" xml:space="preserve">
     <value>Использовать для управления</value>
-  </data>
-  <data name="rBSAMouse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 20</value>
   </data>
   <data name="rBSAMouse.Size" type="System.Drawing.Size, System.Drawing">
     <value>188, 21</value>
@@ -685,7 +679,7 @@
   <data name="cMGyroTriggers.Size" type="System.Drawing.Size, System.Drawing">
     <value>245, 524</value>
   </data>
-  <data name="gBSensitivity,Text" xml:space="preserve">
+  <data name="gBSensitivity.Text" xml:space="preserve">
     <value>Чувствительность</value>
   </data>
   <data name="resetToolStripMenuItem.Text" xml:space="preserve">

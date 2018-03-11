@@ -1819,7 +1819,7 @@ namespace DS4Windows
         {
             double SXD = SXDeadzone[device];
             double SZD = SZDeadzone[device];
-            bool sOff = UseSAforMouse[device];
+            bool sOff = GyroMode[device] == 0;
             switch (control)
             {
                 case DS4Controls.Share: return (byte)(cState.Share ? 255 : 0);
@@ -1865,7 +1865,7 @@ namespace DS4Windows
 
         public static bool getBoolMapping(int device, DS4Controls control, DS4State cState, DS4StateExposed eState, Mouse tp)
         {
-            bool sOff = UseSAforMouse[device];
+            bool sOff = GyroMode[device] == 0;
             switch (control)
             {
                 case DS4Controls.Share: return cState.Share;
@@ -1915,7 +1915,7 @@ namespace DS4Windows
             byte falseVal = 127;
             double SXD = SXDeadzone[device];
             double SZD = SZDeadzone[device];
-            bool sOff = UseSAforMouse[device];
+            bool sOff = GyroMode[device] == 0;
             if (alt)
                 trueVal = 255;
             switch (control)

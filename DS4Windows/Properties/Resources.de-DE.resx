@@ -457,10 +457,10 @@
     <value>Tippe und halte zum Ziehen - leichte Verzögerung bei einzelnen tips</value>
   </data>
   <data name="TestHText" xml:space="preserve">
-    <value>starke testen</value>
+    <value>Starker Motor</value>
   </data>
   <data name="TestLText" xml:space="preserve">
-    <value>schwache testen</value>
+    <value>Schwacher Motor</value>
   </data>
   <data name="TiltDown" xml:space="preserve">
     <value>Neigung nach Unten</value>

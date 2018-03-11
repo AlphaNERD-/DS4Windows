@@ -568,7 +568,7 @@
   <data name="fingersOnTouchpadToolStripMenuItem.Text" xml:space="preserve">
     <value>Dos dedos en el Touchpad</value>
   </data>
-  <data name="gBSensitivity,Text" xml:space="preserve">
+  <data name="gBSensitivity.Text" xml:space="preserve">
     <value>Sensibilidad</value>
   </data>
   <data name="lb6Gryo.Text" xml:space="preserve">

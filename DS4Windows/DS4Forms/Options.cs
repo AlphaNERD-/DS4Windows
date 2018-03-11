@@ -40,8 +40,8 @@ namespace DS4Windows
             btnRumbleLightTest.Text = Properties.Resources.TestLText;
             rBTPControls.Text = rBSAControls.Text;
             rBTPMouse.Text = rBSAMouse.Text;
-            rBTPControls.Location = rBSAControls.Location;
-            rBTPMouse.Location = rBSAMouse.Location;
+            rBTPControls.Location = rBSAMouse.Location;
+            rBTPMouse.Location = rBSAMouseLikeAnalog.Location;
             Visible = false;
             colored = btnRainbow.Image;
             greyscale = GreyscaleImage((Bitmap)btnRainbow.Image);
@@ -312,12 +312,11 @@ namespace DS4Windows
                 cbStartTouchpadOff.Checked = StartTouchpadOff[device];
                 rBTPControls.Checked = UseTPforControls[device];
                 rBTPMouse.Checked = !UseTPforControls[device];
-                rBSAMouse.Checked = UseSAforMouse[device];
-                rBSAControls.Checked = !UseSAforMouse[device];
-                rBSAMouseLikeAnalog.Checked = UseSAforMouseLikeAnalog[device];
                 nUDLSCurve.Value = LSCurve[device];
                 nUDRSCurve.Value = RSCurve[device];
                 cBControllerInput.Checked = DS4Mapping;
+
+                setGyroSettings();
 
                 string[] satriggers = SATriggers[device].Split(',');
                 List<string> s = new List<string>();
@@ -789,6 +788,34 @@ namespace DS4Windows
             }
         }
 
+        private void setGyroSettings()
+        {
+            switch (GyroMode[device])
+            {
+                case 0:
+                    rBSAControls.Checked = true;
+                    break;
+                case 1:
+                    rBSAMouseLikeAnalog.Checked = true;
+                    break;
+                case 2:
+                    rBSAMouse.Checked = true;
+                    break;
+            }
+        }
+
+        private int getGyroSettings()
+        {
+            if (rBSAControls.Checked)
+                return 0;
+            if (rBSAMouseLikeAnalog.Checked)
+                return 1;
+            if (rBSAMouse.Checked)
+                return 2;
+
+            return 0;
+        }
+
         private void button_MouseHover(object sender, EventArgs e)
         {
             bool swipesOn = lBControls.Items.Count > 33;
@@ -1030,8 +1057,7 @@ namespace DS4Windows
             DinputOnly[device] = cBDinput.Checked;
             StartTouchpadOff[device] = cbStartTouchpadOff.Checked;
             UseTPforControls[device] = rBTPControls.Checked;
-            UseSAforMouse[device] = rBSAMouse.Checked;
-            UseSAforMouseLikeAnalog[device] = rBSAMouseLikeAnalog.Checked;
+            GyroMode[device] = getGyroSettings();
             DS4Mapping = cBControllerInput.Checked;
             LSCurve[device] = (int)Math.Round(nUDLSCurve.Value, 0);
             RSCurve[device] = (int)Math.Round(nUDRSCurve.Value, 0);
@@ -2273,8 +2299,7 @@ namespace DS4Windows
 
         private void useSAforMouse_CheckedChanged(object sender, EventArgs e)
         {
-            UseSAforMouse[device] = rBSAMouse.Checked;
-            UseSAforMouseLikeAnalog[device] = rBSAMouseLikeAnalog.Checked;
+            GyroMode[device] = getGyroSettings();
             pnlSAMouse.Visible = rBSAMouse.Checked;
             fLPTiltControls.Visible = rBSAControls.Checked;
         }
@@ -2336,6 +2361,11 @@ namespace DS4Windows
                 SXSens[device] = (double)nUDSXS.Value;
                 SZSens[device] = (double)nUDSZS.Value;
             }
+        }
+
+        private void pnlSixaxis_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
         private void Options_Resize(object sender, EventArgs e)

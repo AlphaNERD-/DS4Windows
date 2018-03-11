@@ -466,7 +466,7 @@
   <data name="gBRumble.Text" xml:space="preserve">
     <value>Rumble</value>
   </data>
-  <data name="gBSensitivity,Text" xml:space="preserve">
+  <data name="gBSensitivity.Text" xml:space="preserve">
     <value>Citlivost</value>
   </data>
   <data name="gBTouchpad.Text" xml:space="preserve">

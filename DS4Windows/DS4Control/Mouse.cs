@@ -34,7 +34,7 @@ namespace DS4Windows
 
         public virtual void sixaxisMoved(object sender, SixAxisEventArgs arg)
         {
-            if (Global.UseSAforMouse[deviceNum] && Global.GyroSensitivity[deviceNum] > 0)
+            if (Global.GyroMode[deviceNum] == 0 && Global.GyroSensitivity[deviceNum] > 0)
             {
                 bool triggeractivated = true;
                 int i = 0;

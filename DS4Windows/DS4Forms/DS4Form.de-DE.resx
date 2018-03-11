@@ -305,7 +305,7 @@
     <value>47, 28</value>
   </data>
   <data name="lbNoControllers.Text" xml:space="preserve">
-    <value>Keine Controller verbunden (Max 4)</value>
+    <value>Keine Controller verbunden (Maximal 4)</value>
   </data>
   <data name="tabProfiles.Text" xml:space="preserve">
     <value>Profile</value>

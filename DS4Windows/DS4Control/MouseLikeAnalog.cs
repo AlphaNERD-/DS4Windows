@@ -20,7 +20,7 @@ namespace DS4Windows
 
         public void SixAxisMoved(object sender, SixAxisEventArgs e)
         {
-            if (Global.UseSAforMouseLikeAnalog[deviceNum] && Global.GyroSensitivity[deviceNum] > 0)
+            if (Global.GyroMode[deviceNum] == 1 && Global.GyroSensitivity[deviceNum] > 0)
             {
                 bool triggeractivated = true;
                 int i = 0;

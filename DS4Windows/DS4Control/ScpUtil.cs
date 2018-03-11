@@ -285,8 +285,7 @@ namespace DS4Windows
         public static bool[] DinputOnly => m_Config.dinputOnly; 
         public static bool[] StartTouchpadOff => m_Config.startTouchpadOff; 
         public static bool[] UseTPforControls => m_Config.useTPforControls;
-        public static bool[] UseSAforMouse => m_Config.useSAforMouse;
-        public static bool[] UseSAforMouseLikeAnalog => m_Config.useSAforMouseLikeAnalog;
+        public static int[] GyroMode => m_Config.gyroMode;
         public static string[] SATriggers => m_Config.sATriggers;
         public static int[] GyroSensitivity => m_Config.gyroSensitivity;
         public static int[] GyroInvert => m_Config.gyroInvert;
@@ -572,8 +571,7 @@ namespace DS4Windows
         public bool[] dinputOnly = { false, false, false, false, false };
         public bool[] startTouchpadOff = { false, false, false, false, false };
         public bool[] useTPforControls = { false, false, false, false, false };
-        public bool[] useSAforMouse = { false, false, false, false, false };
-        public bool[] useSAforMouseLikeAnalog = { false, false, false, false, false };
+        public int[] gyroMode = { 0, 0, 0, 0, 0 };
         public string[] sATriggers = { "", "", "", "", "" };
         public int[] lsCurve = { 0, 0, 0, 0, 0 };
         public int[] rsCurve = { 0, 0, 0, 0, 0 };
@@ -770,8 +768,7 @@ namespace DS4Windows
                 XmlNode xmlDinput = m_Xdoc.CreateNode(XmlNodeType.Element, "DinputOnly", null); xmlDinput.InnerText = dinputOnly[device].ToString(); Node.AppendChild(xmlDinput);
                 XmlNode xmlStartTouchpadOff = m_Xdoc.CreateNode(XmlNodeType.Element, "StartTouchpadOff", null); xmlStartTouchpadOff.InnerText = startTouchpadOff[device].ToString(); Node.AppendChild(xmlStartTouchpadOff);
                 XmlNode xmlUseTPforControls = m_Xdoc.CreateNode(XmlNodeType.Element, "UseTPforControls", null); xmlUseTPforControls.InnerText = useTPforControls[device].ToString(); Node.AppendChild(xmlUseTPforControls);
-                XmlNode xmlUseSAforMouse = m_Xdoc.CreateNode(XmlNodeType.Element, "UseSAforMouse", null); xmlUseSAforMouse.InnerText = useSAforMouse[device].ToString(); Node.AppendChild(xmlUseSAforMouse);
-                XmlNode xmlUseSAforMouseLikeAnalog = m_Xdoc.CreateNode(XmlNodeType.Element, "UseSAforMouseLikeAnalog", null); xmlUseSAforMouseLikeAnalog.InnerText = useSAforMouseLikeAnalog[device].ToString(); Node.AppendChild(xmlUseSAforMouseLikeAnalog);
+                XmlNode xmlGyroMode = m_Xdoc.CreateNode(XmlNodeType.Element, "GyroMode", null); xmlGyroMode.InnerText = gyroMode[device].ToString(); Node.AppendChild(xmlGyroMode);
                 XmlNode xmlSATriggers = m_Xdoc.CreateNode(XmlNodeType.Element, "SATriggers", null); xmlSATriggers.InnerText = sATriggers[device].ToString(); Node.AppendChild(xmlSATriggers);
                 XmlNode xmlGyroSensitivity = m_Xdoc.CreateNode(XmlNodeType.Element, "GyroSensitivity", null); xmlGyroSensitivity.InnerText = gyroSensitivity[device].ToString(); Node.AppendChild(xmlGyroSensitivity);
                 XmlNode xmlGyroInvert = m_Xdoc.CreateNode(XmlNodeType.Element, "GyroInvert", null); xmlGyroInvert.InnerText = gyroInvert[device].ToString(); Node.AppendChild(xmlGyroInvert);
@@ -1451,11 +1448,8 @@ namespace DS4Windows
                 { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/UseTPforControls"); Boolean.TryParse(Item.InnerText, out useTPforControls[device]); }
                 catch { useTPforControls[device] = false; missingSetting = true; }
                 try
-                { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/UseSAforMouse"); Boolean.TryParse(Item.InnerText, out useSAforMouse[device]); }
-                catch { useSAforMouse[device] = false; missingSetting = true; }
-                try
-                { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/UseSAforMouseLikeAnalog");  Boolean.TryParse(Item.InnerText, out useSAforMouseLikeAnalog[device]); }
-                catch { useSAforMouseLikeAnalog[device] = false; missingSetting = true; }
+                { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/GyroMode"); int.TryParse(Item.InnerText, out gyroMode[device]); }
+                catch { gyroMode[device] = 0; missingSetting = true; }
                 try
                 { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/SATriggers"); sATriggers[device] = Item.InnerText; }
                 catch { sATriggers[device] = ""; missingSetting = true; }

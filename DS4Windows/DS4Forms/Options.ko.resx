@@ -234,7 +234,7 @@
   <data name="gBRumble.Text" xml:space="preserve">
     <value>진동</value>
   </data>
-  <data name="gBSensitivity,Text" xml:space="preserve">
+  <data name="gBSensitivity.Text" xml:space="preserve">
     <value>감도</value>
   </data>
   <data name="gBTouchpad.Text" xml:space="preserve">

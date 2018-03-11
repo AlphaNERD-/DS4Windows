@@ -607,7 +607,7 @@
   <data name="DpadToolStripMenuItem.Text" xml:space="preserve">
     <value>Dpad</value>
   </data>
-  <data name="gBSensitivity,Text" xml:space="preserve">
+  <data name="gBSensitivity.Text" xml:space="preserve">
     <value>Herkkyys</value>
   </data>
   <data name="lb6Gryo.Text" xml:space="preserve">

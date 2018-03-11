@@ -661,7 +661,7 @@
   <data name="DpadToolStripMenuItem.Text" xml:space="preserve">
     <value>Dpad</value>
   </data>
-  <data name="gBSensitivity,Text" xml:space="preserve">
+  <data name="gBSensitivity.Text" xml:space="preserve">
     <value>Občutljivost</value>
   </data>
   <data name="gBTouchpad.Text" xml:space="preserve">

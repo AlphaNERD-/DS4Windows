@@ -31,7 +31,7 @@ namespace DS4Windows
         [STAThread]
         static void Main(string[] args)
         {
-            //Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("he");
+            //Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("de-DE");
             for (int i = 0; i < args.Length; i++)
             {
                 string s = args[i];
