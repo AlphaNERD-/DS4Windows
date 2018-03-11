@@ -48,7 +48,7 @@ namespace DS4Windows
             deltaY = -arg.sixAxis.accelY;
             //Console.WriteLine(arg.sixAxis.deltaX);
 
-            double coefficient = Global.GyroSensitivity[deviceNum] / 100f;
+            double coefficient = Global.GyroSensitivity[deviceNum] / 50f;
             //Collect rounding errors instead of losing motion.
             double xMotion = coefficient * deltaX;
             xMotion += hRemainder;
