@@ -496,7 +496,8 @@ namespace DS4Windows
                 // Update the GUI/whatever.
                 DS4LightBar.updateLightBar(device, ind, cState, ExposedState[ind], touchPad[ind]);
 
-                cState = mouseLikeAnalog[ind].GetStickDelta(cState);
+                if (mouseLikeAnalog[ind] != null)
+                    cState = mouseLikeAnalog[ind].GetStickDelta(cState);
 
                 x360Bus.Parse(cState, processingData[ind].Report, ind);
                 // We push the translated Xinput state, and simultaneously we

@@ -51,15 +51,6 @@ namespace DS4Windows
 
         public void handleSixaxis(byte[] gyro, byte[] accel, DS4State state)
         {
-            //bool touchPadIsDown = sensors.TouchButton;
-            /*if (!PacketChanged(data, touchPacketOffset) && touchPadIsDown == lastTouchPadIsDown)
-            {
-                if (SixAxisUnchanged != null)
-                    SixAxisUnchanged(this, EventArgs.Empty);
-                return;
-            }*/
-            /* byte touchID1 = (byte)(data[0 + TOUCHPAD_DATA_OFFSET + touchPacketOffset] & 0x7F);
-             byte touchID2 = (byte)(data[4 + TOUCHPAD_DATA_OFFSET + touchPacketOffset] & 0x7F);*/
             int currentX = (short)((ushort)(gyro[0] << 8) | gyro[1]) / 64;
             int currentY = (short)((ushort)(gyro[2] << 8) | gyro[3]) / 64;
             int currentZ = (short)((ushort)(gyro[4] << 8) | gyro[5]) / 64;
@@ -67,24 +58,17 @@ namespace DS4Windows
             int AccelY = (short)((ushort)(accel[0] << 8) | accel[1]) / 256;
             int AccelZ = (short)((ushort)(accel[4] << 8) | accel[5]) / 256;
             SixAxisEventArgs args;
-            //if (sensors.Touch1 || sensors.Touch2)
-            {
-               /* if (SixAxisMoved != null)
-                {
-                    SixAxis sPrev, now;
-                    sPrev = new SixAxis(lastGyroX, lastGyroY, lastGyroZ, lastAX,lastAY,lastAZ);
-                    now = new SixAxis(currentX, currentY, currentZ, AccelX, AccelY, AccelZ, sPrev);
-                    args = new SixAxisEventArgs(state.ReportTimeStamp, now);
-                    SixAxisMoved(this, args);
-                }
 
-                lastGyroX = currentX;
-                lastGyroY = currentY;
-                lastGyroZ = currentZ;
-                lastAX = AccelX;
-                lastAY = AccelY;
-                lastAZ = AccelZ;*/
-            }
+            //Hallo Julia in der Zukunft. Denk bloß nicht daran, nochmal SixaxisMoved zu aktivieren.
+            //Das treibt die Latenz nach oben.
+            /*if (SixAxisMoved != null)
+            {
+                SixAxis sPrev, now;
+                sPrev = new SixAxis(lastGyroX, lastGyroY, lastGyroZ, lastAX,lastAY,lastAZ);
+                now = new SixAxis(currentX, currentY, currentZ, AccelX, AccelY, AccelZ, sPrev);
+                args = new SixAxisEventArgs(state.ReportTimeStamp, now);
+                SixAxisMoved(this, args);
+            }*/
             if (AccelX != 0 || AccelY != 0 || AccelZ != 0)
             {
                 if (SixAccelMoved != null)
@@ -95,14 +79,14 @@ namespace DS4Windows
                     args = new SixAxisEventArgs(state.ReportTimeStamp, now);
                     SixAccelMoved(this, args);
                 }
-
-                lastGyroX = currentX;
-                lastGyroY = currentY;
-                lastGyroZ = currentZ;
-                lastAX = AccelX;
-                lastAY = AccelY;
-                lastAZ = AccelZ;
             }
+
+            lastGyroX = currentX;
+            lastGyroY = currentY;
+            lastGyroZ = currentZ;
+            lastAX = AccelX;
+            lastAY = AccelY;
+            lastAZ = AccelZ;
         }
     }
 }

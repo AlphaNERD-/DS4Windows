@@ -46,9 +46,8 @@ namespace DS4Windows
             int deltaX = 0, deltaY = 0;
             deltaX = -arg.sixAxis.accelX;
             deltaY = -arg.sixAxis.accelY;
-            //Console.WriteLine(arg.sixAxis.deltaX);
 
-            double coefficient = Global.GyroSensitivity[deviceNum] / 50f;
+            double coefficient = Global.GyroSensitivity[deviceNum] / 16f;
             //Collect rounding errors instead of losing motion.
             double xMotion = coefficient * deltaX;
             xMotion += hRemainder;
@@ -75,8 +74,23 @@ namespace DS4Windows
         {
             if (Global.GyroMode[deviceNum] == 1 && Global.GyroSensitivity[deviceNum] > 0)
             {
-                cState.RX = (byte)(cState.RX + (byte)stickH);
-                cState.RY = (byte)(cState.RY + (byte)stickV);
+                int resultX = 0, resultY = 0;
+
+                resultX = (byte)(cState.RX + (byte)stickH);
+                resultY = (byte)(cState.RY + (byte)stickV);
+
+                if (((double)cState.RX) + stickH > 255)
+                    resultX = 255;
+                else if (((double)cState.RX) + stickH < 0)
+                    resultX = 0;
+
+                if (((double)cState.RY) + stickV > 255)
+                    resultY = 255;
+                else if (((double)cState.RY) + stickV < 0)
+                    resultY = 0;
+
+                cState.RX = (byte)resultX;
+                cState.RY = (byte)resultY;
             }
 
             return cState;
