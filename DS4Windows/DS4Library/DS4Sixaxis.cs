@@ -61,14 +61,14 @@ namespace DS4Windows
 
             //Hallo Julia in der Zukunft. Denk bloß nicht daran, nochmal SixaxisMoved zu aktivieren.
             //Das treibt die Latenz nach oben.
-            /*if (SixAxisMoved != null)
+            if (SixAxisMoved != null)
             {
                 SixAxis sPrev, now;
                 sPrev = new SixAxis(lastGyroX, lastGyroY, lastGyroZ, lastAX,lastAY,lastAZ);
                 now = new SixAxis(currentX, currentY, currentZ, AccelX, AccelY, AccelZ, sPrev);
                 args = new SixAxisEventArgs(state.ReportTimeStamp, now);
                 SixAxisMoved(this, args);
-            }*/
+            }
             if (AccelX != 0 || AccelY != 0 || AccelZ != 0)
             {
                 if (SixAccelMoved != null)

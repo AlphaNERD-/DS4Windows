@@ -317,6 +317,7 @@ namespace DS4Windows
                 cBControllerInput.Checked = DS4Mapping;
 
                 setGyroSettings();
+                setAccelSettings();
 
                 string[] satriggers = SATriggers[device].Split(',');
                 List<string> s = new List<string>();
@@ -345,11 +346,18 @@ namespace DS4Windows
                     }
                 }
                 nUDGyroSensitivity.Value = GyroSensitivity[device];
+                nUDMouselikeGyroLinearAccel.Value = GyroSensitivity[device];
+                nUDMouselikeGyroRampAccel.Value = GyroRampSensitivity[device];
                 int invert = GyroInvert[device];
                 cBGyroInvertX.Checked = invert == 2 || invert == 3;
                 cBGyroInvertY.Checked = invert == 1 || invert == 3;
+                cBMouselikeGyroInvertX.Checked = cBGyroInvertX.Checked;
+                cBMouselikeGyroInvertY.Checked = cBGyroInvertY.Checked;
                 if (s.Count > 0)
+                {
                     btnGyroTriggers.Text = string.Join(", ", s);
+                    btnMouselikeGyroTriggers.Text = string.Join(", ", s);
+                }
             }
             else
             {
@@ -420,8 +428,13 @@ namespace DS4Windows
                 cBControllerInput.Checked = DS4Mapping;
                 ((ToolStripMenuItem)cMGyroTriggers.Items[cMGyroTriggers.Items.Count - 1]).Checked = true;
                 nUDGyroSensitivity.Value = 100;
+                nUDMouselikeGyroLinearAccel.Value = 100;
+                nUDMouselikeGyroRampAccel.Value = 100;
                 cBGyroInvertX.Checked = false;
                 cBGyroInvertY.Checked = false;
+                cBMouselikeGyroInvertX.Checked = false;
+                cBMouselikeGyroInvertY.Checked = false;
+
                 Set();
             }
             
@@ -816,6 +829,33 @@ namespace DS4Windows
             return 0;
         }
 
+        private void setAccelSettings()
+        {
+            switch (MouseLikeAnalogAccelMode[device])
+            {
+                case 0:
+                    rBSALinearAccel.Checked = true;
+                    nUDMouselikeGyroLinearAccel.Enabled = true;
+                    nUDMouselikeGyroRampAccel.Enabled = false;
+                    break;
+                case 1:
+                    rBSARampAccel.Checked = true;
+                    nUDMouselikeGyroRampAccel.Enabled = true;
+                    nUDMouselikeGyroLinearAccel.Enabled = false;
+                    break;
+            }
+        }
+
+        private int getAccelSettings()
+        {
+            if (rBSALinearAccel.Checked)
+                return 0;
+            if (rBSARampAccel.Checked)
+                return 1;
+
+            return 0;
+        }
+
         private void button_MouseHover(object sender, EventArgs e)
         {
             bool swipesOn = lBControls.Items.Count > 33;
@@ -1058,6 +1098,7 @@ namespace DS4Windows
             StartTouchpadOff[device] = cbStartTouchpadOff.Checked;
             UseTPforControls[device] = rBTPControls.Checked;
             GyroMode[device] = getGyroSettings();
+            MouseLikeAnalogAccelMode[device] = getAccelSettings();
             DS4Mapping = cBControllerInput.Checked;
             LSCurve[device] = (int)Math.Round(nUDLSCurve.Value, 0);
             RSCurve[device] = (int)Math.Round(nUDRSCurve.Value, 0);
@@ -1067,11 +1108,13 @@ namespace DS4Windows
                     pactions.Add(lvi.Text);
             ProfileActions[device] = pactions;
             pnlTPMouse.Visible = rBTPMouse.Checked;
-            pnlSAMouse.Visible = rBSAMouse.Checked | rBSAMouseLikeAnalog.Checked;
+            pnlSAMouse.Visible = rBSAMouse.Checked;
+            pnlSAMouselikeAnalog.Visible = rBSAMouseLikeAnalog.Checked;
             fLPTiltControls.Visible = rBSAControls.Checked;
             fLPTouchSwipe.Visible = rBTPControls.Checked;
 
             GyroSensitivity[device] = (int)Math.Round(nUDGyroSensitivity.Value, 0);
+            GyroRampSensitivity[device] = (int)Math.Round(nUDMouselikeGyroRampAccel.Value, 0);
             int invert = 0;
             if (cBGyroInvertX.Checked)
                 invert += 2;
@@ -2300,7 +2343,8 @@ namespace DS4Windows
         private void useSAforMouse_CheckedChanged(object sender, EventArgs e)
         {
             GyroMode[device] = getGyroSettings();
-            pnlSAMouse.Visible = rBSAMouse.Checked | rBSAMouseLikeAnalog.Checked;
+            pnlSAMouse.Visible = rBSAMouse.Checked;
+            pnlSAMouselikeAnalog.Visible = rBSAMouseLikeAnalog.Checked;
             fLPTiltControls.Visible = rBSAControls.Checked;
         }
 
@@ -2332,7 +2376,10 @@ namespace DS4Windows
             }
             SATriggers[device] = string.Join(",", ints);
             if (s.Count > 0)
+            {
                 btnGyroTriggers.Text = string.Join(", ", s);
+                btnMouselikeGyroTriggers.Text = string.Join(", ", s);
+            }
         }
 
         private void cBGyroInvert_CheckChanged(object sender, EventArgs e)
@@ -2366,6 +2413,37 @@ namespace DS4Windows
         private void pnlSixaxis_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void btnMouselikeGyroTriggers_Click(object sender, EventArgs e)
+        {
+            cMGyroTriggers.Show((Control)sender, new Point(0, ((Control)sender).Height));
+        }
+
+        private void nUDMouselikeGyroLinearAccel_ValueChanged(object sender, EventArgs e)
+        {
+            GyroSensitivity[device] = (int)Math.Round(nUDMouselikeGyroLinearAccel.Value, 0);
+        }
+
+        private void nUDMouselikeGyroRampAccel_ValueChanged(object sender, EventArgs e)
+        {
+            GyroRampSensitivity[device] = (int)Math.Round(nUDMouselikeGyroRampAccel.Value, 0);
+        }
+
+        private void cBMouselikeGyroInvertX_CheckedChanged(object sender, EventArgs e)
+        {
+            cBGyroInvertX.Checked = cBMouselikeGyroInvertX.Checked;
+        }
+
+        private void cBMouselikeGyroInvertY_CheckedChanged(object sender, EventArgs e)
+        {
+            cBGyroInvertY.Checked = cBMouselikeGyroInvertY.Checked;
+        }
+
+        private void rBSALinearAccel_CheckedChanged(object sender, EventArgs e)
+        {
+            MouseLikeAnalogAccelMode[device] = getAccelSettings();
+            setAccelSettings();
         }
 
         private void Options_Resize(object sender, EventArgs e)

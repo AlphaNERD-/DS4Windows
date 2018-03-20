@@ -47,14 +47,35 @@ namespace DS4Windows
             deltaX = -arg.sixAxis.accelX;
             deltaY = -arg.sixAxis.accelY;
 
-            double coefficient = Global.GyroSensitivity[deviceNum] / 16f;
+            double xMotion = 0;
+            double yMotion = 0;
+
+            if (Global.MouseLikeAnalogAccelMode[deviceNum] == 0)
+            {
+                double coefficient = Global.GyroSensitivity[deviceNum] / 100f;
+                xMotion = coefficient * deltaX;
+                yMotion = coefficient * deltaY;
+            }
+            else
+            {
+                double coefficient = Global.GyroRampSensitivity[deviceNum] / 100f;
+                xMotion = Math.Pow(deltaX, 2) * (0.3925d * coefficient);
+
+                if (deltaX < 0)
+                    xMotion = xMotion * -1;
+
+                yMotion = Math.Pow(deltaY, 2) * (0.3925d * coefficient);
+
+                if (deltaY < 0)
+                    yMotion = yMotion * -1;
+            }
+
             //Collect rounding errors instead of losing motion.
-            double xMotion = coefficient * deltaX;
             xMotion += hRemainder;
             int xAction = (int)xMotion;
             hRemainder += xMotion - xAction;
             hRemainder -= (int)hRemainder;
-            double yMotion = coefficient * deltaY;
+            
             yMotion += vRemainder;
             int yAction = (int)yMotion;
             vRemainder += yMotion - yAction;

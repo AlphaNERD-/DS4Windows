@@ -289,6 +289,8 @@ namespace DS4Windows
         public static string[] SATriggers => m_Config.sATriggers;
         public static int[] GyroSensitivity => m_Config.gyroSensitivity;
         public static int[] GyroInvert => m_Config.gyroInvert;
+        public static int[] MouseLikeAnalogAccelMode => m_Config.mouseLikeAnalogAccelMode;
+        public static int[] GyroRampSensitivity => m_Config.gyroRampSensitivity;
         public static DS4Color[] MainColor => m_Config.m_Leds; 
         public static DS4Color[] LowColor => m_Config.m_LowLeds;
         public static DS4Color[] ChargingColor => m_Config.m_ChargingLeds;
@@ -542,7 +544,7 @@ namespace DS4Windows
             new DS4Color(Color.Pink),
             new DS4Color(Color.White)
         };
-        public DS4Color[] m_ChargingLeds = new DS4Color[] 
+        public DS4Color[] m_ChargingLeds = new DS4Color[]
         {
              new DS4Color(Color.Black),
             new DS4Color(Color.Black),
@@ -550,7 +552,7 @@ namespace DS4Windows
             new DS4Color(Color.Black),
             new DS4Color(Color.Black)
         };
-        public DS4Color[] m_FlashLeds = new DS4Color[] 
+        public DS4Color[] m_FlashLeds = new DS4Color[]
         {
              new DS4Color(Color.Black),
             new DS4Color(Color.Black),
@@ -607,7 +609,9 @@ namespace DS4Windows
         public bool flashWhenLate = true;
         public int flashWhenLateAt = 10;
         public int[] gyroSensitivity = { 100, 100, 100, 100, 100 };
+        public int[] gyroRampSensitivity = { 100, 100, 100, 100, 100 };
         public int[] gyroInvert = { 0, 0, 0, 0, 0 };
+        public int[] mouseLikeAnalogAccelMode = { 0, 0, 0, 0, 0 };
 
         public BackingStore()
         {
@@ -772,6 +776,8 @@ namespace DS4Windows
                 XmlNode xmlSATriggers = m_Xdoc.CreateNode(XmlNodeType.Element, "SATriggers", null); xmlSATriggers.InnerText = sATriggers[device].ToString(); Node.AppendChild(xmlSATriggers);
                 XmlNode xmlGyroSensitivity = m_Xdoc.CreateNode(XmlNodeType.Element, "GyroSensitivity", null); xmlGyroSensitivity.InnerText = gyroSensitivity[device].ToString(); Node.AppendChild(xmlGyroSensitivity);
                 XmlNode xmlGyroInvert = m_Xdoc.CreateNode(XmlNodeType.Element, "GyroInvert", null); xmlGyroInvert.InnerText = gyroInvert[device].ToString(); Node.AppendChild(xmlGyroInvert);
+                XmlNode xmlMouseLikeAnalogAccelMode = m_Xdoc.CreateNode(XmlNodeType.Element, "MouseLikeAnalogAccelMode", null); xmlMouseLikeAnalogAccelMode.InnerText = mouseLikeAnalogAccelMode[device].ToString(); Node.AppendChild(xmlMouseLikeAnalogAccelMode);
+                XmlNode xmlGyroRampSensitivity = m_Xdoc.CreateNode(XmlNodeType.Element, "GyroRampSensitivity", null); xmlGyroRampSensitivity.InnerText = gyroRampSensitivity[device].ToString(); Node.AppendChild(xmlGyroRampSensitivity);
                 XmlNode xmlLSC = m_Xdoc.CreateNode(XmlNodeType.Element, "LSCurve", null); xmlLSC.InnerText = lsCurve[device].ToString(); Node.AppendChild(xmlLSC);
                 XmlNode xmlRSC = m_Xdoc.CreateNode(XmlNodeType.Element, "RSCurve", null); xmlRSC.InnerText = rsCurve[device].ToString(); Node.AppendChild(xmlRSC);
                 XmlNode xmlProfileActions = m_Xdoc.CreateNode(XmlNodeType.Element, "ProfileActions", null); xmlProfileActions.InnerText = string.Join("/", profileActions[device]); Node.AppendChild(xmlProfileActions);
@@ -1459,6 +1465,12 @@ namespace DS4Windows
                 try
                 { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/GyroInvert"); int.TryParse(Item.InnerText, out gyroInvert[device]); }
                 catch { gyroInvert[device] = 0; missingSetting = true; }
+                try
+                { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/MouseLikeAnalogAccelMode"); int.TryParse(Item.InnerText, out mouseLikeAnalogAccelMode[device]); }
+                catch { mouseLikeAnalogAccelMode[device] = 0; missingSetting = true; }
+                try
+                { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/GyroRampSensitivity"); int.TryParse(Item.InnerText, out gyroRampSensitivity[device]); }
+                catch { gyroRampSensitivity[device] = 100; missingSetting = true; }
                 try { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/LSCurve"); int.TryParse(Item.InnerText, out lsCurve[device]); }
                 catch { missingSetting = true; }
                 try { Item = m_Xdoc.SelectSingleNode("/" + rootname + "/RSCurve"); int.TryParse(Item.InnerText, out rsCurve[device]); }

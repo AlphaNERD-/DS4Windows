@@ -131,7 +131,7 @@ namespace DS4Windows
                             x360Bus.Plugin(ind);
                         device.Report += this.On_Report;
                         TouchPadOn(ind, device);
-                        device.SixAxis.SixAccelMoved += mouseLikeAnalog[ind].SixAxisMoved;
+                        device.SixAxis.SixAxisMoved += mouseLikeAnalog[ind].SixAxisMoved;
                         //string filename = ProfilePath[ind];
                         ind++;
                         if (showlog)
@@ -239,7 +239,7 @@ namespace DS4Windows
                             if (!DinputOnly[Index])
                                 x360Bus.Plugin(Index);
                             TouchPadOn(Index, device);
-                            device.SixAxis.SixAccelMoved += mouseLikeAnalog[Index].SixAxisMoved;
+                            device.SixAxis.SixAxisMoved += mouseLikeAnalog[Index].SixAxisMoved;
                             //string filename = Path.GetFileName(ProfilePath[Index]);
                             if (System.IO.File.Exists(appdatapath + "\\Profiles\\" + ProfilePath[Index] + ".xml"))
                             {
